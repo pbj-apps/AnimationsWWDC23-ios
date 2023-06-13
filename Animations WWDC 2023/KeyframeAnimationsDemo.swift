@@ -55,8 +55,13 @@ struct KeyFrameExempleView: View {
                 enableAnimation.toggle()
             }
             .fontWeight(.bold)
+            .padding(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8).stroke(.studioPurple, lineWidth: 1.0)
+            )
             .padding(.bottom, 80)
         }
+        .tint(.studioPurple)
     }
 }
 
