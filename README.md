@@ -1,18 +1,17 @@
 # WWDC 2023 SwiftUI Animations
 
-During the WWDC 2023, Apple has introduced some new ways of making advanced animations. 
+During WWDC 2023, Apple introduced some new ways of making advanced animations. 
 The two major additions to this are Keyframes and Phased animations.
 
 ## Phased Animation
 
-This new API utilizes a Phase animator to transition through different phases. Each phase will then transition to its new state with the specified animation.
-This can allow you to make looping animations easily.
+This new API utilizes a Phase animator to transition through different phases. Each phase will then transition to its new state with the specified animation, allowing looping animations to be created easily.
 
 <img width="589" alt="PhaseAnimationScheme" src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/9cc11e45-3b18-48b4-b307-4b30a692459c">
 
 Let’s see how we create this simple animation.
 
-![SIMPLEPHASEANIMATION](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/4a4fc82b-eaa0-46c1-90e0-33d9ac8be843)
+![simplephase](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/9cb7a87c-b257-4c58-a800-11fc850f05bc)
 
 ``` swift
 Image(systemName: "exclamationmark.triangle.fill")
@@ -32,9 +31,9 @@ The first parameter represents the modified view. The second parameter is the cu
 For this example, we are only using boolean values to define two phases.
 It’s in this closure that the magic happens. You can add modifiers to the content parameter and change the data of the view depending on the phase
 
-When the view appears, the first phase is active, false in this case. Then SwiftUI transition to the next phase and animate the view changes.
+When the view appears, the first phase is active - in this case, false. Then SwiftUI transitions to the next phase and animates the view changes.
 
-If you want more control over the animation, calling the closure animation that returns the animation to use when transitioning to the next phase.
+If you want more control over the animation, call the closure animation that returns the animation to use when transitioning to the next phase.
 
 ``` swift 
 .phaseAnimator([false, true]) { content, phase in
@@ -51,7 +50,7 @@ Here, we give it an EaseInOut animation for a smooth transition that will last o
 
 We can go even further by having more than two phases. Let’s make this animation
 
-![multiPhaseAnimation](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/08d8b780-a721-4ce6-a5fe-1f53be2319e0)
+![multiphase](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/f8081540-ad45-4e84-9d5e-518b91c48ee0)
 
 The emoji will go up and then scale down to return to its position and size.
 
@@ -109,7 +108,7 @@ Keyframes are a great way to define values at a specific time during an animatio
 
 To demonstrate Keyframe Animations, let's try to create a bouncing ball:
 
-![keyframeBouncyball](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/7e4e9bf4-2e9c-40ee-bab0-983aa0cccd01)
+![simpleKeyframe](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/199fc49d-2799-490c-a04f-82766e5f3185)
 
 First thing first, we need to add to our view a Keyframe Animator
 
@@ -162,7 +161,7 @@ VStack {
 
 As you can see, in the content closure, we can add modifiers to the view with values from the given frame.
 
-In the keyframe closure, we define KeyFrame Tracks. A Keytrack allow you to animate an effect with its own timing. 
+In the keyframe closure, we define KeyFrame Tracks. A Keytrack allows you to animate an effect with its own timing. 
 
 In the example above, the Keytrack will animate the vertical offset with a Spring effect.
 
@@ -211,7 +210,8 @@ There are different types of Keyframe to interpolate between values:
 
 To get animations right will often require fine tuning and experimentation.
 
-![keyframes](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/9be588a8-9466-4f26-9eaf-090f8a3ae4c0)
+![advancedKeyframe](https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/912a707a-a8ed-481e-9b6d-01b4720b7e68)
 
 Keyframes give you more control over the animation but come at a cost. 
-Each frame that you define for the animation will refresh the view. This is why it it best to avoid using Keyframe animations while running expensive operations.
+Each frame that you define for the animation will refresh the view, so it’s best to avoid using Keyframe animations while running expensive operations.
+
