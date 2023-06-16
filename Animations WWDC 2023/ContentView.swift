@@ -38,6 +38,18 @@ struct ContentView: View {
                                 RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1.0)
                             )
                     }
+
+                    NavigationLink {
+                        Landscaper()
+                    } label: {
+                        Text("Landscaper")
+                            .font(.system(size: 30, weight: .bold))
+                            .foregroundStyle(Color.white)
+                            .padding(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8).stroke(.white, lineWidth: 1.0)
+                            )
+                    }
                 }
                 
                 VStack {

@@ -23,10 +23,8 @@ struct KeyFrameExempleView: View {
         VStack {
             Spacer()
         
-            Circle()
-                .fill(.orange)
-                .frame(width: 200, height: 200)
-                .overlay(Image(systemName: "globe").resizable().frame(width: 200, height: 200))
+            Text("🏀")
+                .font(.system(size: 150))
                 .keyframeAnimator(initialValue: Keyframe(), trigger: enableAnimation) { view, frame in
                     view
                         .scaleEffect(y: frame.scale)
@@ -38,6 +36,8 @@ struct KeyFrameExempleView: View {
                         LinearKeyframe(250, duration: 0.3)
                         LinearKeyframe(150, duration: 0.3)
                         SpringKeyframe(200, duration: 0.3, spring: .bouncy)
+                        LinearKeyframe(200, duration: 1)
+                        SpringKeyframe(.zero, duration: 0.5, spring: .bouncy)
                     }
                     KeyframeTrack(\.scale) {
                         CubicKeyframe(1, duration: 0.3)
