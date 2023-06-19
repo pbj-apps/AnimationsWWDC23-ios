@@ -21,6 +21,7 @@ struct Landscaper: View {
     var sky: some View {
         ZStack {
             Color.darkBlue
+            stars()
             
             Color.blue
                 .phaseAnimator(DayCycle.allCases) { view, phase in
@@ -81,16 +82,6 @@ struct Landscaper: View {
                                     y: yOffset)
                                 .zIndex(yOffset)
                         }
-//                        Tree()
-//                            .offset(x: -100, y: -50)
-//                        Tree()
-//                            .offset(x: 140, y: 80)
-//                        Tree()
-//                            .offset(x: 80, y: 20)
-//                        Tree()
-//                            .offset(x: -130, y: 50)
-//                        Tree()
-//                            .offset(x: 90, y: -120)
                     }
                 }
                 .overlay {
@@ -126,6 +117,30 @@ struct Landscaper: View {
             .shadow(color: .white, radius: 40)
             .shadow(color: .yellow, radius: 40)
     }
+    
+    func stars() -> some View {
+        var numberOfStars = Int.random(in: 100...250)
+        var starPositions: [CGPoint] = []
+
+        for _ in 0 ..< numberOfStars {
+            let randomX = CGFloat.random(in: 0...UIScreen.main.bounds.width)
+            let randomY = CGFloat.random(in: 0...UIScreen.main.bounds.height)
+            let starPosition = CGPoint(x: randomX, y: randomY)
+            starPositions.append(starPosition)
+        }
+
+        let stars = starPositions.map { position in
+            Circle()
+                .fill(Color.white)
+                .frame(width: 2, height: 2)
+                .position(position)
+        }
+
+        return ForEach(0 ..< stars.count) { index in
+                stars[index]
+            }
+    }
+
 }
 
 #Preview {
