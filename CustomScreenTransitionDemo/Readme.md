@@ -60,7 +60,6 @@ struct ListView: View {
                             .background(item.color)
                             .cornerRadius(8)
                             .padding(.horizontal)
-                            .matchedGeometryEffect(id: item, in: namespace)
                     }
                 }
             }
