@@ -85,7 +85,6 @@ struct ListView: View {
                 
                 Text("Tap to read more")
                     .font(.system(size: 20))
-                    .matchedGeometryEffect(id: "description", in: namespace)
             }
             
             Spacer()
