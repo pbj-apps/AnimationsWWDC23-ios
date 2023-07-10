@@ -173,3 +173,149 @@ struct ListView: View {
 Once an item is selected, we hide the list to display its detail view. SwiftUI will now make a spring animation as defined in the ```onTapGesture```.
 
 <img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/a25d3296-f029-4b45-982c-c2b0136b8fd6" width="295" height="639" />
+
+## Swipe to dismiss
+
+For a nicer user experience, we will add a swipe to dismiss gesture to go back to the list of items.
+
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/732eb334-7f01-4b8b-8f2f-e30b330101e5" width="295" height="639" />
+
+To make this reusable, we will create a ViewModifier that can be applied to any view.
+
+``` swift
+struct SwipeToDismissModifier: ViewModifier {
+
+    @State private var offset: CGSize = .zero
+    var onDismiss: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .offset(y: offset.height)
+            .animation(.interactiveSpring(), value: offset)
+            .simultaneousGesture(
+                DragGesture()
+                    .onChanged { gesture in
+                        if gesture.translation.width < 50 {
+                            offset = gesture.translation
+                        }
+                    }
+                    .onEnded { _ in
+                        if abs(offset.height) > 100 {
+                            onDismiss()
+                        } else {
+                            offset = .zero
+                        }
+                    }
+            )
+    }
+}
+```
+
+The modifier has the following properties:
+
+```offset```: A state property that represents the current offset of the view. It starts with zero size and gets updated as the user interacts with the view.
+
+```onDismiss```: A closure that will be called when the view is dismissed.
+
+The content view is offset vertically by the ```offset.height``` value, which creates the visual effect of moving the view based on the user's gesture.
+An animation is applied to the offset property to provide a smooth interactive experience. The animation is triggered whenever the offset value changes.
+The ```simultaneousGesture``` modifier is used to attach a DragGesture to the content view. This gesture allows the user to interact with the view by dragging it.
+When dragged, the view updates the offset property with the translation of the gesture, allowing the view to follow the user's finger. When the user stops dragging, ```onEnded``` is called and checks if the value of the vertical offset (```offset.height```) exceeds a threshold value (100 in this case). If it does, the ```onDismiss``` closure is called to perform the dismissal action. Otherwise, the offset is reset to zero, bringing the view back to its original position.
+
+We create an extension to use it in an elegant way
+
+``` swift 
+extension View {
+    func swipeToDismiss(onDismiss: @escaping () -> Void) -> some View {
+        modifier(SwipeToDismissModifier(onDismiss: onDismiss))
+    }
+}
+```
+
+Finally, apply the modifier to the ```DetailView```
+
+``` swift 
+DetailView(item: selectedItem, namespace: namespace)
+    //Other modifiers
+    .swipeToDismiss {
+        withAnimation(.spring()) {
+            self.selectedItem = nil
+        }
+    }
+```
+## Expendable Header
+
+To demonstrate another way to use ```matchedGeometryEffect```, let's add an expendable header to our list.
+
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/1d6e4cf9-255c-4082-a0d4-8364ce1a459f" width="295" height="639" />
+
+We simply create 2 layouts, one horizontal and one vertical and use ```matchedGeometryEffect``` on the icon and the title on the expended and retracted view so SwiftUI knows how to transition between the 2 view states.
+
+``` swift
+var retractedHeader: some View {
+        HStack {
+            Image(systemName: "star.circle")
+                .font(.system(size: 50))
+                .matchedGeometryEffect(id: "icon", in: namespace)
+            
+            VStack(alignment: .leading) {
+                Text("Item list")
+                    .font(.system(size: 30))
+                    .matchedGeometryEffect(id: "title", in: namespace)
+                
+                Text("Tap to read more")
+                    .font(.system(size: 20))
+            }
+            
+            Spacer()
+        }
+        .onTapGesture {
+            withAnimation(.easeOut) {
+                isHeaderExtended.toggle()
+            }
+        }
+        .padding()
+    }
+    
+    var extendedHeader: some View {
+        VStack {
+            Image(systemName: "star.circle")
+                .font(.system(size: 100))
+                .matchedGeometryEffect(id: "icon", in: namespace)
+            
+            Text("Item list")
+                .font(.system(size: 40))
+                .matchedGeometryEffect(id: "title", in: namespace)
+            
+            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non nibh varius odio auctor blandit. Quisque sollicitudin massa justo. Fusce consequat erat ac quam lobortis finibus. Pellentesque lorem lacus, mattis id aliquet a, dapibus et lorem. Integer ultrices pellentesque purus, non iaculis nisi consequat eu.")
+                .font(.system(size: 15))
+            
+        }
+        .onTapGesture {
+            withAnimation(.easeIn) {
+                isHeaderExtended.toggle()
+            }
+        }
+        .padding()
+    }
+```
+
+``` swift 
+struct ListView: View {
+    //...
+    @State private var isHeaderExpended: Bool = false
+
+    var body: some View {
+    //...
+    else {
+        if isHeaderExpended {
+            extendedHeader
+        } else {
+            retractedHeader
+        }
+        ScrollView {
+            //...
+        }
+    }
+}
+```
