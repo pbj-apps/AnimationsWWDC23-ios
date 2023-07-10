@@ -16,6 +16,7 @@ struct DetailView: View {
             RoundedRectangle(cornerRadius: 15)
                 .fill(item.color)
                 .padding()
+                .matchedGeometryEffect(id: item.color, in: namespace)
             
             Text(item.title)
                 .font(.system(size: 50))

@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
+    
     var body: some View {
-        VStack {
             ListView()
-        }
     }
 }
 
@@ -26,7 +25,8 @@ struct ListView: View {
     let items = (1...15).map { _ in Item() }
     @Namespace private var namespace
     @State private var selectedItem: Item?
-
+    @State private var isHeaderExpended: Bool = false
+    
     var body: some View {
         VStack {
             if let selectedItem {
@@ -34,12 +34,18 @@ struct ListView: View {
                     .matchedGeometryEffect(id: selectedItem, in: namespace)
                     .frame(maxWidth: .infinity)
                     .background(Color.white)
-                    .onTapGesture {
+                    .swipeToDismiss {
                         withAnimation(.spring()) {
                             self.selectedItem = nil
                         }
                     }
             } else {
+                if isHeaderExpended {
+                    extendedHeader
+                } else {
+                    retractedHeader
+                    
+                }
                 ScrollView {
                     ForEach(items, id: \.self) { item in
                         Button(action: {
@@ -47,18 +53,103 @@ struct ListView: View {
                                 selectedItem = item
                             }
                         }) {
-                            Text(item.title)
-                                .font(.title)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(item.color)
-                                .cornerRadius(8)
-                                .padding(.horizontal)
-                                .matchedGeometryEffect(id: item, in: namespace)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(item.color)
+                                    .matchedGeometryEffect(id: item.color, in: namespace)
+                                Text(item.title)
+                                    .font(.title)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(item.color)
+                                    .cornerRadius(8)
+                            }
+                            .padding(.horizontal)
                         }
                     }
                 }
             }
         }
+    }
+    
+    var retractedHeader: some View {
+        HStack {
+            Image(systemName: "star.circle")
+                .font(.system(size: 50))
+                .matchedGeometryEffect(id: "icon", in: namespace)
+            
+            VStack(alignment: .leading) {
+                Text("Item list")
+                    .font(.system(size: 30))
+                    .matchedGeometryEffect(id: "title", in: namespace)
+                
+                Text("Tap to read more")
+                    .font(.system(size: 20))
+                    .matchedGeometryEffect(id: "description", in: namespace)
+            }
+            
+            Spacer()
+        }
+        .onTapGesture {
+            withAnimation(.easeOut) {
+                isHeaderExpended.toggle()
+            }
+        }
+        .padding()
+    }
+    
+    var extendedHeader: some View {
+        VStack {
+            Image(systemName: "star.circle")
+                .font(.system(size: 100))
+                .matchedGeometryEffect(id: "icon", in: namespace)
+            
+            Text("Item list")
+                .font(.system(size: 40))
+                .matchedGeometryEffect(id: "title", in: namespace)
+            
+            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non nibh varius odio auctor blandit. Quisque sollicitudin massa justo. Fusce consequat erat ac quam lobortis finibus. Pellentesque lorem lacus, mattis id aliquet a, dapibus et lorem. Integer ultrices pellentesque purus, non iaculis nisi consequat eu.")
+                .font(.system(size: 15))
+            
+        }
+        .onTapGesture {
+            withAnimation(.easeIn) {
+                isHeaderExpended.toggle()
+            }
+        }
+        .padding()
+    }
+}
+
+extension View {
+    func swipeToDismiss(onDismiss: @escaping () -> Void) -> some View {
+        modifier(SwipeToDismissModifier(onDismiss: onDismiss))
+    }
+}
+
+struct SwipeToDismissModifier: ViewModifier {
+    
+    @State private var offset: CGSize = .zero
+    var onDismiss: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .offset(y: offset.height)
+            .animation(.interactiveSpring(), value: offset)
+            .simultaneousGesture(
+                DragGesture()
+                    .onChanged { gesture in
+                        if gesture.translation.width < 50 {
+                            offset = gesture.translation
+                        }
+                    }
+                    .onEnded { _ in
+                        if abs(offset.height) > 100 {
+                            onDismiss()
+                        } else {
+                            offset = .zero
+                        }
+                    }
+            )
     }
 }
