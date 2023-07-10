@@ -138,9 +138,7 @@ struct SwipeToDismissModifier: ViewModifier {
             .simultaneousGesture(
                 DragGesture()
                     .onChanged { gesture in
-                        if gesture.translation.width < 50 {
-                            offset = gesture.translation
-                        }
+                        offset = gesture.translation
                     }
                     .onEnded { _ in
                         if abs(offset.height) > 100 {
