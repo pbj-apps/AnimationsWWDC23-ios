@@ -28,43 +28,41 @@ struct ListView: View {
     @State private var isHeaderExpended: Bool = false
     
     var body: some View {
-        ZStack {
-            VStack {
-                if isHeaderExpended {
-                    extendedHeader
-                } else {
-                    retractedHeader
-                    
-                }
-                ScrollView {
-                    ForEach(items, id: \.self) { item in
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                selectedItem = item
-                            }
-                        }) {
-                            ZStack {
-                                Text(item.title)
-                                    .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
-                                    .font(.title)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(item.color)
-                                    .mask({
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(item.color)
-                                            .matchedGeometryEffect(id: item.color, in: namespace)
-                                    })
-                            }
-                            .padding(.horizontal)
+        VStack {
+            if isHeaderExpended {
+                extendedHeader
+            } else {
+                retractedHeader
+                
+            }
+            ScrollView {
+                ForEach(items, id: \.self) { item in
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            selectedItem = item
                         }
+                    }) {
+                        ZStack {
+                            Text(item.title)
+                                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                    .fill(item.color)
+                                    .matchedGeometryEffect(id: item.color, in: namespace)
+                                )
+                        }
+                        .padding(.horizontal)
                     }
                 }
             }
+        }.overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
-                    .matchedGeometryEffect(id: selectedItem, in: namespace)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .swipeToDismiss {
                         withAnimation(.spring()) {

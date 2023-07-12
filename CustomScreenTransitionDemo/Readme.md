@@ -125,7 +125,13 @@ struct DetailView: View {
     }
 ```
 
-Once it's done, add a ```.matchedGeometryEffect(id: identifier, in: namespace)``` to all the views that should be part of the transition. The identifier should be unique allowing SwiftUI to transition between one layout to another.
+Once it's done, add this modifier to all the views that should be part of the transition.
+``` swift 
+func matchedGeometryEffect<ID>(id: ID, in namespace: Namespace.ID, properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center, isSource: Bool = true) -> some View where ID : Hashable
+``` 
+The identifier should be unique allowing SwiftUI to transition between one layout to another.
+
+One thing important to remember is to put every modifier we want to include in the transition before ```.matchedGeometryEffect(id: identifier, in: namespace)```. It is often preferable to set the frame and padding after.
 
 ```swift
 struct ListView: View {
@@ -135,40 +141,80 @@ struct ListView: View {
 
     var body: some View {
         VStack {
+            ScrollView {
+                ForEach(items, id: \.self) { item in
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            selectedItem = item
+                        }
+                    }) {
+                        ZStack {
+                            Text(item.title)
+                                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                                .font(.title)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                    .fill(item.color)
+                                    .matchedGeometryEffect(id: item.color, in: namespace)
+                                )
+                        }
+                        .padding(.horizontal)
+                    }
+                }
+            }
+        }.overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity)
                     .background(Color.white)
-                    .matchedGeometryEffect(id: selectedItem, in: namespace)
-                    .onTapGesture {
+                    .swipeToDismiss {
                         withAnimation(.spring()) {
                             self.selectedItem = nil
                         }
                     }
-            } else {
-                ScrollView {
-                    ForEach(items, id: \.self) { item in
-                        Button(action: {
-                            withAnimation(.spring()) {
-                                selectedItem = item
-                            }
-                        }) {
-                            Text(item.title)
-                                .font(.title)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(item.color)
-                                .cornerRadius(8)
-                                .padding(.horizontal)
-                                .matchedGeometryEffect(id: item, in: namespace)
-                        }
-                    }
-                }
             }
         }
     }
 }
+
+struct DetailView: View {
+    let item: Item
+    let namespace: Namespace.ID
+
+    var body: some View {
+        VStack(spacing: 20) {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(item.color)
+                .matchedGeometryEffect(id: item.color, in: namespace)
+                .padding()
+            
+            Text(item.title)
+                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                .font(.system(size: 50))
+                .padding()
+                .transition(.scale(scale: 1))
+            
+            Text(item.description)
+                .font(.body)
+                .padding()
+        }
+        .background()
+        .cornerRadius(16)
+    }
+}
+
+struct DetailView_Previews: PreviewProvider {
+    @Namespace static var namespace
+
+    static var previews: some View {
+        DetailView(item: Item(), namespace: namespace)
+    }
+}
 ```
+
+You might have noticed that we are using ``` .matchedGeometryEffect( ...properties: .position) ```. We tell SwiftUI to copy the position from the source view. In this case, it prevents the text from being truncated during the animation.
 
 Once an item is selected, we hide the list to display its detail view. SwiftUI will now make a spring animation as defined in the ```onTapGesture```.
 

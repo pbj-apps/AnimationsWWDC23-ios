@@ -15,11 +15,11 @@ struct DetailView: View {
         VStack(spacing: 20) {
             RoundedRectangle(cornerRadius: 15)
                 .fill(item.color)
-                .padding()
                 .matchedGeometryEffect(id: item.color, in: namespace)
+                .padding()
             
             Text(item.title)
-                .matchedGeometryEffect(id: item.title, in: namespace)
+                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
                 .font(.system(size: 50))
                 .padding()
                 .transition(.scale(scale: 1))
