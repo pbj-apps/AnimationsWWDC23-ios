@@ -17,6 +17,12 @@ struct DetailView: View {
                 .fill(item.color)
                 .matchedGeometryEffect(id: item.color, in: namespace)
                 .padding()
+                .overlay(
+                    Image("Studio Logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 65)
+                )
             
             Text(item.title)
                 .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)

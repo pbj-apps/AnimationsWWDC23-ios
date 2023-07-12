@@ -35,6 +35,7 @@ struct ListView: View {
                 retractedHeader
                 
             }
+            
             ScrollView {
                 ForEach(items, id: \.self) { item in
                     Button(action: {
@@ -59,6 +60,7 @@ struct ListView: View {
                     }
                 }
             }
+
         }.overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
@@ -75,16 +77,20 @@ struct ListView: View {
     
     var retractedHeader: some View {
         HStack {
-            Image(systemName: "star.circle")
-                .font(.system(size: 50))
+            Image("Studio Icon")
+                .resizable()
                 .matchedGeometryEffect(id: "icon", in: namespace)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 50, height: 50)
             
             VStack(alignment: .leading) {
-                Text("Item list")
-                    .font(.system(size: 30))
+                Image("Studio Logo Dark")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .matchedGeometryEffect(id: "title", in: namespace)
+                    .frame(height: 30)
                 
-                Text("Tap to read more")
+                Text("Tap to discover")
                     .font(.system(size: 20))
             }
             
@@ -100,16 +106,21 @@ struct ListView: View {
     
     var extendedHeader: some View {
         VStack {
-            Image(systemName: "star.circle")
-                .font(.system(size: 100))
+            Image("Studio Icon")
+                .resizable()
                 .matchedGeometryEffect(id: "icon", in: namespace)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100)
             
-            Text("Item list")
-                .font(.system(size: 40))
+            Image("Studio Logo Dark")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 .matchedGeometryEffect(id: "title", in: namespace)
+                .frame(height: 50)
             
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non nibh varius odio auctor blandit. Quisque sollicitudin massa justo. Fusce consequat erat ac quam lobortis finibus. Pellentesque lorem lacus, mattis id aliquet a, dapibus et lorem. Integer ultrices pellentesque purus, non iaculis nisi consequat eu.")
-                .font(.system(size: 15))
+                Text("Bring new digital products to market and transform existing offerings with Studio. \n \nWe help startups and enterprise clients accelerate their product development plans with innovative strategy, beautiful design, world-class engineering, and product-led growth.")
+                    .font(.system(size: 16))
+                    .padding(.top)
             
         }
         .onTapGesture {
@@ -118,36 +129,5 @@ struct ListView: View {
             }
         }
         .padding()
-    }
-}
-
-extension View {
-    func swipeToDismiss(onDismiss: @escaping () -> Void) -> some View {
-        modifier(SwipeToDismissModifier(onDismiss: onDismiss))
-    }
-}
-
-struct SwipeToDismissModifier: ViewModifier {
-    
-    @State private var offset: CGSize = .zero
-    var onDismiss: () -> Void
-
-    func body(content: Content) -> some View {
-        content
-            .offset(y: offset.height)
-            .animation(.interactiveSpring(), value: offset)
-            .simultaneousGesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        offset = gesture.translation
-                    }
-                    .onEnded { _ in
-                        if abs(offset.height) > 200 {
-                            onDismiss()
-                        } else {
-                            offset = .zero
-                        }
-                    }
-            )
     }
 }
