@@ -69,8 +69,7 @@ struct ListView: View {
     }
 }
 ```
-
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/117a1644-dd77-48e2-830c-c11815dd4bd2" width="295" height="639" />
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/12393850/253007722-5a30fe8c-187f-4b85-871b-6752eea9ceab.png" width="295" height="639" />
 
 ## Create the Detail View
 
@@ -104,7 +103,7 @@ struct DetailView: View {
     }
 }
 ```
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/29ccce32-1f17-45be-af47-593c909350ad" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/fa4dcf11-6ff7-4ff1-8e3e-629088ba0b80" width="295" height="639" />
 
 ## Add the Transition
 
@@ -232,13 +231,13 @@ You might have noticed that we are using ``` .matchedGeometryEffect( ...properti
 
 Once an item is selected, we hide the list to display its detail view. SwiftUI will now make a spring animation as defined in the ```onTapGesture```.
 
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/a25d3296-f029-4b45-982c-c2b0136b8fd6" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/2bad2837-ebb9-411c-a910-89d904c576ee" width="295" height="639" />
 
 ## Swipe to dismiss
 
 For a nicer user experience, we will add a swipe to dismiss gesture to go back to the list of items.
 
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/732eb334-7f01-4b8b-8f2f-e30b330101e5" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/ad847002-16e7-4db9-972c-116b3922fa46" width="295" height="639" />
 
 To make this reusable, we will create a ViewModifier that can be applied to any view.
 
@@ -306,7 +305,7 @@ DetailView(item: selectedItem, namespace: namespace)
 
 To demonstrate another way to use ```matchedGeometryEffect```, let's add an expendable header to our list.
 
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/1d6e4cf9-255c-4082-a0d4-8364ce1a459f" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/a4d2fc2e-14ed-40ee-8503-3700ee9b9c04" width="295" height="639" />
 
 We simply create 2 layouts, one horizontal and one vertical and use ```matchedGeometryEffect``` on the icon and the title on the expended and retracted view so SwiftUI knows how to transition between the 2 view states.
 
