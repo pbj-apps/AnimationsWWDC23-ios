@@ -22,10 +22,17 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+    let items = [
+        Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."),
+        Item(title: "DESIGN", color: Color("Red"), description: "Engaging users with beautiful design \n\nIn a crowded market, beautiful designs communicate to users how seriously you take their attention. In tandem with our product strategists, product designers work tirelessly to inspire users with original branding, human-centric experience design, and dynamic animations."),
+        Item(title: "ENGINEERING", color: Color("MidBlue"), description: "Scaling your business with enterprise-class code\n\nThe Studio engineering teams translate our product designs into functional code on web, iOS, and Android. Whether you need a responsive web app or an iPhone application, our full-stack team will deliver documented, extensible code."),
+        Item(title: "GROWTH", color: Color("DarkBlue"), description: "We think about growth as a diverse toolkit – not an individual channel.\n\nWe create and execute strategies to scale your company to the next level and define clear & measurable growth targets to keep team members aligned on the metrics that matter.")
+    ]
     @Namespace private var namespace
     @State private var selectedItem: Item?
     @State private var isHeaderExpended: Bool = false
+    
+    @State private var isListLayout = true
     
     var body: some View {
         VStack {
@@ -33,34 +40,32 @@ struct ListView: View {
                 extendedHeader
             } else {
                 retractedHeader
-                
+
             }
             
-            ScrollView {
-                ForEach(items, id: \.self) { item in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            selectedItem = item
-                        }
-                    }) {
-                        ZStack {
+            if isListLayout {
+                ScrollView {
+                    ForEach(items, id: \.self) { item in
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                selectedItem = item
+                            }
+                        }) {
                             Text(item.title)
                                 .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
                                 .font(.title)
                                 .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding()
+                                .frame(maxWidth: .infinity, minHeight: 180)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
                                     .fill(item.color)
                                     .matchedGeometryEffect(id: item.color, in: namespace)
                                 )
+                                .padding(.horizontal)
                         }
-                        .padding(.horizontal)
                     }
                 }
             }
-
         }.overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)

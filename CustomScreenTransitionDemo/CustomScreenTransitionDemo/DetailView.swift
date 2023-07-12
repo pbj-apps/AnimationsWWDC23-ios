@@ -28,13 +28,11 @@ struct DetailView: View {
                 .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
                 .font(.system(size: 50))
                 .padding()
-                .transition(.scale(scale: 1))
             
             Text(item.description)
                 .font(.body)
                 .padding()
         }
-        .background()
         .cornerRadius(16)
     }
 }
@@ -43,20 +41,14 @@ struct DetailView_Previews: PreviewProvider {
     @Namespace static var namespace
 
     static var previews: some View {
-        DetailView(item: Item(), namespace: namespace)
+        DetailView(item: Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."), namespace: namespace)
     }
 }
 
 struct Item: Hashable {
     let id = UUID()
-    let title: String = "Item \(Int.random(in: 0...999))"
-    let color = randomColor()
-    let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non nibh varius odio auctor blandit. Quisque sollicitudin massa justo. Fusce consequat erat ac quam lobortis finibus. Pellentesque lorem lacus, mattis id aliquet a, dapibus et lorem. Integer ultrices pellentesque purus, non iaculis nisi consequat eu. Maecenas fringilla ex placerat, viverra massa sed, lacinia turpis. In in ullamcorper eros. Quisque malesuada non quam viverra sollicitudin. Praesent semper massa id finibus finibus. Maecenas in laoreet quam."
+    let title: String
+    let color: Color
+    let description: String
 }
 
-func randomColor() -> Color {
-    let red = Double.random(in: 0...1)
-    let green = Double.random(in: 0...1)
-    let blue = Double.random(in: 0...1)
-    return Color(red: red, green: green, blue: blue)
-}

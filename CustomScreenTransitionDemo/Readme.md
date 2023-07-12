@@ -5,21 +5,14 @@ In this tutorial, you will learn how to create a smooth transition between two v
 
 ## Create the Item Model
 
-Let's start by creating the Item model that represents each item in the list. It includes simple properties like a random title, color, and description.
+Let's start by creating the Item model that represents each item in the list. It includes simple properties such as a title, color, and description.
 
 ```swift
 struct Item: Hashable {
     let id = UUID()
-    let title: String = "Item \(Int.random(in: 0...999))"
-    let color = randomColor()
-    let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non nibh varius odio auctor blandit. Quisque sollicitudin massa justo. Fusce consequat erat ac quam lobortis finibus. Pellentesque lorem lacus, mattis id aliquet a, dapibus et lorem. Integer ultrices pellentesque purus, non iaculis nisi consequat eu. Maecenas fringilla ex placerat, viverra massa sed, lacinia turpis. In in ullamcorper eros. Quisque malesuada non quam viverra sollicitudin. Praesent semper massa id finibus finibus. Maecenas in laoreet quam."
-}
-
-func randomColor() -> Color {
-    let red = Double.random(in: 0...1)
-    let green = Double.random(in: 0...1)
-    let blue = Double.random(in: 0...1)
-    return Color(red: red, green: green, blue: blue)
+    let title: String
+    let color: Color
+    let description: String
 }
 ```
 
@@ -41,7 +34,12 @@ struct ContentView: View {
 }
 
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+    let items = [
+        Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."),
+        Item(title: "DESIGN", color: Color("Red"), description: "Engaging users with beautiful design \n\nIn a crowded market, beautiful designs communicate to users how seriously you take their attention. In tandem with our product strategists, product designers work tirelessly to inspire users with original branding, human-centric experience design, and dynamic animations."),
+        Item(title: "ENGINEERING", color: Color("MidBlue"), description: "Scaling your business with enterprise-class code\n\nThe Studio engineering teams translate our product designs into functional code on web, iOS, and Android. Whether you need a responsive web app or an iPhone application, our full-stack team will deliver documented, extensible code."),
+        Item(title: "GROWTH", color: Color("DarkBlue"), description: "We think about growth as a diverse toolkit – not an individual channel.\n\nWe create and execute strategies to scale your company to the next level and define clear & measurable growth targets to keep team members aligned on the metrics that matter.")
+    ]
     @State private var selectedItem: Item?
 
     var body: some View {
@@ -49,16 +47,20 @@ struct ListView: View {
             ScrollView {
                 ForEach(items, id: \.self) { item in
                     Button(action: {
-                        withAnimation(.spring()) {
+                        withAnimation(.easeInOut) {
                             selectedItem = item
                         }
                     }) {
-                        Text(item.number)
+                        Text(item.title)
+                            .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
                             .font(.title)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(item.color)
-                            .cornerRadius(8)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                .fill(item.color)
+                                .matchedGeometryEffect(id: item.color, in: namespace)
+                            )
                             .padding(.horizontal)
                     }
                 }
@@ -83,6 +85,12 @@ struct DetailView: View {
             RoundedRectangle(cornerRadius: 15)
                 .fill(item.color)
                 .padding()
+                .overlay(
+                    Image("Studio Logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 65)
+                )
             
             Text(item.title)
                 .font(.system(size: 50))
@@ -92,7 +100,6 @@ struct DetailView: View {
                 .font(.body)
                 .padding()
         }
-        .background()
         .cornerRadius(16)
     }
 }
@@ -105,7 +112,7 @@ Now that we have everything setup, we can implement the transition. To do this, 
 
 ```swift
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+        ...
     @Namespace private var namespace
     @State private var selectedItem: Item?
 
@@ -135,10 +142,15 @@ One thing important to remember is to put every modifier we want to include in t
 
 ```swift
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+    let items = [
+        Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."),
+        Item(title: "DESIGN", color: Color("Red"), description: "Engaging users with beautiful design \n\nIn a crowded market, beautiful designs communicate to users how seriously you take their attention. In tandem with our product strategists, product designers work tirelessly to inspire users with original branding, human-centric experience design, and dynamic animations."),
+        Item(title: "ENGINEERING", color: Color("MidBlue"), description: "Scaling your business with enterprise-class code\n\nThe Studio engineering teams translate our product designs into functional code on web, iOS, and Android. Whether you need a responsive web app or an iPhone application, our full-stack team will deliver documented, extensible code."),
+        Item(title: "GROWTH", color: Color("DarkBlue"), description: "We think about growth as a diverse toolkit – not an individual channel.\n\nWe create and execute strategies to scale your company to the next level and define clear & measurable growth targets to keep team members aligned on the metrics that matter.")
+    ]
     @Namespace private var namespace
     @State private var selectedItem: Item?
-
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -148,28 +160,26 @@ struct ListView: View {
                             selectedItem = item
                         }
                     }) {
-                        ZStack {
-                            Text(item.title)
-                                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
-                                .font(.title)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                    .fill(item.color)
-                                    .matchedGeometryEffect(id: item.color, in: namespace)
-                                )
-                        }
-                        .padding(.horizontal)
+                        Text(item.title)
+                            .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                .fill(item.color)
+                                .matchedGeometryEffect(id: item.color, in: namespace)
+                            )
+                            .padding(.horizontal)
                     }
                 }
             }
         }.overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
-                    .swipeToDismiss {
+                    .onTapGesture {
                         withAnimation(.spring()) {
                             self.selectedItem = nil
                         }
@@ -189,18 +199,22 @@ struct DetailView: View {
                 .fill(item.color)
                 .matchedGeometryEffect(id: item.color, in: namespace)
                 .padding()
+                .overlay(
+                    Image("Studio Logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 65)
+                )
             
             Text(item.title)
                 .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
                 .font(.system(size: 50))
                 .padding()
-                .transition(.scale(scale: 1))
             
             Text(item.description)
                 .font(.body)
                 .padding()
         }
-        .background()
         .cornerRadius(16)
     }
 }
@@ -209,7 +223,7 @@ struct DetailView_Previews: PreviewProvider {
     @Namespace static var namespace
 
     static var previews: some View {
-        DetailView(item: Item(), namespace: namespace)
+        DetailView(item: Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."), namespace: namespace)
     }
 }
 ```
@@ -280,7 +294,8 @@ Finally, apply the modifier to the ```DetailView```
 
 ``` swift 
 DetailView(item: selectedItem, namespace: namespace)
-    //Other modifiers
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color.white)
     .swipeToDismiss {
         withAnimation(.spring()) {
             self.selectedItem = nil

@@ -13,6 +13,7 @@
 		963EDF9B2A57030600B2D550 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 963EDF9A2A57030500B2D550 /* Preview Assets.xcassets */; };
 		963EDFA22A570A6C00B2D550 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963EDFA12A570A6C00B2D550 /* DetailView.swift */; };
 		9698BB0C2A5EE5D2007C6454 /* SwipeToDismissModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9698BB0B2A5EE5D2007C6454 /* SwipeToDismissModifier.swift */; };
+		9698BB0E2A5EE902007C6454 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9698BB0D2A5EE902007C6454 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		963EDF9A2A57030500B2D550 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		963EDFA12A570A6C00B2D550 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		9698BB0B2A5EE5D2007C6454 /* SwipeToDismissModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeToDismissModifier.swift; sourceTree = "<group>"; };
+		9698BB0D2A5EE902007C6454 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				963EDF992A57030500B2D550 /* Preview Content */,
 				963EDFA12A570A6C00B2D550 /* DetailView.swift */,
 				9698BB0B2A5EE5D2007C6454 /* SwipeToDismissModifier.swift */,
+				9698BB0D2A5EE902007C6454 /* Colors.swift */,
 			);
 			path = CustomScreenTransitionDemo;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				963EDF962A57030400B2D550 /* ContentView.swift in Sources */,
+				9698BB0E2A5EE902007C6454 /* Colors.swift in Sources */,
 				9698BB0C2A5EE5D2007C6454 /* SwipeToDismissModifier.swift in Sources */,
 				963EDFA22A570A6C00B2D550 /* DetailView.swift in Sources */,
 				963EDF942A57030400B2D550 /* CustomScreenTransitionDemoApp.swift in Sources */,
