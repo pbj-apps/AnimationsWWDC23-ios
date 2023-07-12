@@ -19,8 +19,10 @@ struct DetailView: View {
                 .matchedGeometryEffect(id: item.color, in: namespace)
             
             Text(item.title)
+                .matchedGeometryEffect(id: item.title, in: namespace)
                 .font(.system(size: 50))
                 .padding()
+                .transition(.scale(scale: 1))
             
             Text(item.description)
                 .font(.body)

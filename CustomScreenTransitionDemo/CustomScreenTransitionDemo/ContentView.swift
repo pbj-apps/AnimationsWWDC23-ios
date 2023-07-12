@@ -28,7 +28,39 @@ struct ListView: View {
     @State private var isHeaderExpended: Bool = false
     
     var body: some View {
-        VStack {
+        ZStack {
+            VStack {
+                if isHeaderExpended {
+                    extendedHeader
+                } else {
+                    retractedHeader
+                    
+                }
+                ScrollView {
+                    ForEach(items, id: \.self) { item in
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                selectedItem = item
+                            }
+                        }) {
+                            ZStack {
+                                Text(item.title)
+                                    .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                                    .font(.title)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(item.color)
+                                    .mask({
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(item.color)
+                                            .matchedGeometryEffect(id: item.color, in: namespace)
+                                    })
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                }
+            }
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
                     .matchedGeometryEffect(id: selectedItem, in: namespace)
@@ -39,35 +71,6 @@ struct ListView: View {
                             self.selectedItem = nil
                         }
                     }
-            } else {
-                if isHeaderExpended {
-                    extendedHeader
-                } else {
-                    retractedHeader
-                    
-                }
-                ScrollView {
-                    ForEach(items, id: \.self) { item in
-                        Button(action: {
-                            withAnimation(.spring()) {
-                                selectedItem = item
-                            }
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(item.color)
-                                    .matchedGeometryEffect(id: item.color, in: namespace)
-                                Text(item.title)
-                                    .font(.title)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(item.color)
-                                    .cornerRadius(8)
-                            }
-                            .padding(.horizontal)
-                        }
-                    }
-                }
             }
         }
     }
@@ -141,7 +144,7 @@ struct SwipeToDismissModifier: ViewModifier {
                         offset = gesture.translation
                     }
                     .onEnded { _ in
-                        if abs(offset.height) > 100 {
+                        if abs(offset.height) > 200 {
                             onDismiss()
                         } else {
                             offset = .zero
