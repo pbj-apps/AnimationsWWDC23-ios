@@ -137,7 +137,7 @@ func matchedGeometryEffect<ID>(id: ID, in namespace: Namespace.ID, properties: M
 ``` 
 The identifier should be unique allowing SwiftUI to transition between one layout to another.
 
-One thing important to remember is to put every modifier we want to include in the transition before ```.matchedGeometryEffect(id: identifier, in: namespace)```. It is often preferable to set the frame and padding after.
+One important thing to remember is to place all the modifiers that we want to include in the transition before the ```.matchedGeometryEffect(id: identifier, in: namespace)``` modifier. It is generally recommended to set the frame and padding modifiers after the matched geometry effect to ensure the desired behavior. Apple does not provide detailed explanations for this, but it could be related to the way SwiftUI calculates positions and handles transitions. By following this guideline, we can avoid any unexpected or unintended behavior during the animation.
 
 ```swift
 struct ListView: View {
