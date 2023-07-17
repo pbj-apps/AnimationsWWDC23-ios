@@ -380,18 +380,22 @@ struct ListView: View {
 ```
 ### Grid layout
 
-Similarly, we can add a button to switch from a vertical layout to a grid layout
+Similarly, we can add a button to switch from a vertical layout to a grid layout.
+
+<img src="https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/b43a3fcc-a5bd-4b8f-9247-00a85c43cbb4" width="295" height="639" />
 
 ``` swift
 @State private var isGridLayout: Bool = false
 
 var body: some View {
+    //Header
+
     VStack {
         ScrollView {
             if isGridLayout {
                 gridLayout
             } else {
-                // Foreach
+                // Vertical Layout
             }
         }
     }
@@ -445,8 +449,6 @@ The code is pretty straight forward. A simple boolean is used to change between 
 The button is overlaying the content VStack to be always visible above the expendable header.
 
 The same Item, with the same ``` matchedGeometryEffect ```, is used except we change its dimensions to fit two items per row. 
-
-<img src="https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/fabb7f64-f316-4a85-8bf4-b3965bca7217" width="295" height="639" />
 
 ## Conclusion
 
