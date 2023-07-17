@@ -107,7 +107,7 @@ struct DetailView: View {
 
 ## Add the Transition
 
-Now that we have everything setup, we can implement the transition. To do this, we first need to add a ```@Namespace ``` which is simply a view property that links views together. 
+Now that we have everything setup, we can implement the transition. To do this, we first need to add a ```@Namespace``` which is simply a view property that links views together. 
 
 ```swift
 struct ListView: View {
