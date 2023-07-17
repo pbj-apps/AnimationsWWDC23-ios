@@ -5,21 +5,14 @@ In this tutorial, you will learn how to create a smooth transition between two v
 
 ## Create the Item Model
 
-Let's start by creating the Item model that represents each item in the list. It includes simple properties like a random title, color, and description.
+Let's start by creating the Item model that represents each item in the list. It includes simple properties such as a title, color, and description.
 
 ```swift
 struct Item: Hashable {
     let id = UUID()
-    let title: String = "Item \(Int.random(in: 0...999))"
-    let color = randomColor()
-    let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non nibh varius odio auctor blandit. Quisque sollicitudin massa justo. Fusce consequat erat ac quam lobortis finibus. Pellentesque lorem lacus, mattis id aliquet a, dapibus et lorem. Integer ultrices pellentesque purus, non iaculis nisi consequat eu. Maecenas fringilla ex placerat, viverra massa sed, lacinia turpis. In in ullamcorper eros. Quisque malesuada non quam viverra sollicitudin. Praesent semper massa id finibus finibus. Maecenas in laoreet quam."
-}
-
-func randomColor() -> Color {
-    let red = Double.random(in: 0...1)
-    let green = Double.random(in: 0...1)
-    let blue = Double.random(in: 0...1)
-    return Color(red: red, green: green, blue: blue)
+    let title: String
+    let color: Color
+    let description: String
 }
 ```
 
@@ -41,7 +34,12 @@ struct ContentView: View {
 }
 
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+    let items = [
+        Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."),
+        Item(title: "DESIGN", color: Color("Red"), description: "Engaging users with beautiful design \n\nIn a crowded market, beautiful designs communicate to users how seriously you take their attention. In tandem with our product strategists, product designers work tirelessly to inspire users with original branding, human-centric experience design, and dynamic animations."),
+        Item(title: "ENGINEERING", color: Color("MidBlue"), description: "Scaling your business with enterprise-class code\n\nThe Studio engineering teams translate our product designs into functional code on web, iOS, and Android. Whether you need a responsive web app or an iPhone application, our full-stack team will deliver documented, extensible code."),
+        Item(title: "GROWTH", color: Color("DarkBlue"), description: "We think about growth as a diverse toolkit – not an individual channel.\n\nWe create and execute strategies to scale your company to the next level and define clear & measurable growth targets to keep team members aligned on the metrics that matter.")
+    ]
     @State private var selectedItem: Item?
 
     var body: some View {
@@ -49,16 +47,20 @@ struct ListView: View {
             ScrollView {
                 ForEach(items, id: \.self) { item in
                     Button(action: {
-                        withAnimation(.spring()) {
+                        withAnimation(.easeInOut) {
                             selectedItem = item
                         }
                     }) {
-                        Text(item.number)
+                        Text(item.title)
+                            .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
                             .font(.title)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(item.color)
-                            .cornerRadius(8)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                .fill(item.color)
+                                .matchedGeometryEffect(id: item.color, in: namespace)
+                            )
                             .padding(.horizontal)
                     }
                 }
@@ -67,8 +69,7 @@ struct ListView: View {
     }
 }
 ```
-
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/117a1644-dd77-48e2-830c-c11815dd4bd2" width="295" height="639" />
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/12393850/253007722-5a30fe8c-187f-4b85-871b-6752eea9ceab.png" width="295" height="639" />
 
 ## Create the Detail View
 
@@ -83,6 +84,12 @@ struct DetailView: View {
             RoundedRectangle(cornerRadius: 15)
                 .fill(item.color)
                 .padding()
+                .overlay(
+                    Image("Studio Logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 65)
+                )
             
             Text(item.title)
                 .font(.system(size: 50))
@@ -92,12 +99,11 @@ struct DetailView: View {
                 .font(.body)
                 .padding()
         }
-        .background()
         .cornerRadius(16)
     }
 }
 ```
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/29ccce32-1f17-45be-af47-593c909350ad" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/fa4dcf11-6ff7-4ff1-8e3e-629088ba0b80" width="295" height="639" />
 
 ## Add the Transition
 
@@ -105,7 +111,7 @@ Now that we have everything setup, we can implement the transition. To do this, 
 
 ```swift
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+        ...
     @Namespace private var namespace
     @State private var selectedItem: Item?
 
@@ -125,60 +131,113 @@ struct DetailView: View {
     }
 ```
 
-Once it's done, add a ```.matchedGeometryEffect(id: identifier, in: namespace)``` to all the views that should be part of the transition. The identifier should be unique allowing SwiftUI to transition between one layout to another.
+Once it's done, add this modifier to all the views that should be part of the transition.
+``` swift 
+func matchedGeometryEffect<ID>(id: ID, in namespace: Namespace.ID, properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center, isSource: Bool = true) -> some View where ID : Hashable
+``` 
+The identifier should be unique allowing SwiftUI to transition between one layout to another.
+
+One thing important to remember is to put every modifier we want to include in the transition before ```.matchedGeometryEffect(id: identifier, in: namespace)```. It is often preferable to set the frame and padding after.
 
 ```swift
 struct ListView: View {
-    let items = (1...15).map { _ in Item() }
+    let items = [
+        Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."),
+        Item(title: "DESIGN", color: Color("Red"), description: "Engaging users with beautiful design \n\nIn a crowded market, beautiful designs communicate to users how seriously you take their attention. In tandem with our product strategists, product designers work tirelessly to inspire users with original branding, human-centric experience design, and dynamic animations."),
+        Item(title: "ENGINEERING", color: Color("MidBlue"), description: "Scaling your business with enterprise-class code\n\nThe Studio engineering teams translate our product designs into functional code on web, iOS, and Android. Whether you need a responsive web app or an iPhone application, our full-stack team will deliver documented, extensible code."),
+        Item(title: "GROWTH", color: Color("DarkBlue"), description: "We think about growth as a diverse toolkit – not an individual channel.\n\nWe create and execute strategies to scale your company to the next level and define clear & measurable growth targets to keep team members aligned on the metrics that matter.")
+    ]
     @Namespace private var namespace
     @State private var selectedItem: Item?
-
+    
     var body: some View {
         VStack {
+            ScrollView {
+                ForEach(items, id: \.self) { item in
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            selectedItem = item
+                        }
+                    }) {
+                        Text(item.title)
+                            .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                .fill(item.color)
+                                .matchedGeometryEffect(id: item.color, in: namespace)
+                            )
+                            .padding(.horizontal)
+                    }
+                }
+            }
+        }.overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
-                    .matchedGeometryEffect(id: selectedItem, in: namespace)
                     .onTapGesture {
                         withAnimation(.spring()) {
                             self.selectedItem = nil
                         }
                     }
-            } else {
-                ScrollView {
-                    ForEach(items, id: \.self) { item in
-                        Button(action: {
-                            withAnimation(.spring()) {
-                                selectedItem = item
-                            }
-                        }) {
-                            Text(item.title)
-                                .font(.title)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(item.color)
-                                .cornerRadius(8)
-                                .padding(.horizontal)
-                                .matchedGeometryEffect(id: item, in: namespace)
-                        }
-                    }
-                }
             }
         }
     }
 }
+
+struct DetailView: View {
+    let item: Item
+    let namespace: Namespace.ID
+
+    var body: some View {
+        VStack(spacing: 20) {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(item.color)
+                .matchedGeometryEffect(id: item.color, in: namespace)
+                .padding()
+                .overlay(
+                    Image("Studio Logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 65)
+                )
+            
+            Text(item.title)
+                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                .font(.system(size: 50))
+                .padding()
+            
+            Text(item.description)
+                .font(.body)
+                .padding()
+        }
+        .cornerRadius(16)
+    }
+}
+
+struct DetailView_Previews: PreviewProvider {
+    @Namespace static var namespace
+
+    static var previews: some View {
+        DetailView(item: Item(title: "STRATEGY", color: Color("Purple"), description: "Solving problems and crafting solutions that make your business grow. \n\nWe make digital products, not just software, so we begin every project with Product Strategy Sprints to define problems, visualize solutions, and scope an Agile development plan."), namespace: namespace)
+    }
+}
 ```
+
+You might have noticed that we are using ``` .matchedGeometryEffect( ...properties: .position) ```. We tell SwiftUI to copy the position from the source view. In this case, it prevents the text from being truncated during the animation.
 
 Once an item is selected, we hide the list to display its detail view. SwiftUI will now make a spring animation as defined in the ```onTapGesture```.
 
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/a25d3296-f029-4b45-982c-c2b0136b8fd6" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/2bad2837-ebb9-411c-a910-89d904c576ee" width="295" height="639" />
 
 ## Swipe to dismiss
 
 For a nicer user experience, we will add a swipe to dismiss gesture to go back to the list of items.
 
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/732eb334-7f01-4b8b-8f2f-e30b330101e5" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/ad847002-16e7-4db9-972c-116b3922fa46" width="295" height="639" />
 
 To make this reusable, we will create a ViewModifier that can be applied to any view.
 
@@ -234,7 +293,8 @@ Finally, apply the modifier to the ```DetailView```
 
 ``` swift 
 DetailView(item: selectedItem, namespace: namespace)
-    //Other modifiers
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color.white)
     .swipeToDismiss {
         withAnimation(.spring()) {
             self.selectedItem = nil
@@ -245,7 +305,7 @@ DetailView(item: selectedItem, namespace: namespace)
 
 To demonstrate another way to use ```matchedGeometryEffect```, let's add an expendable header to our list.
 
-<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/1d6e4cf9-255c-4082-a0d4-8364ce1a459f" width="295" height="639" />
+<img src="https://github.com/pbj-apps/AnimationsWWDC23-ios/assets/12393850/a4d2fc2e-14ed-40ee-8503-3700ee9b9c04" width="295" height="639" />
 
 We simply create 2 layouts, one horizontal and one vertical and use ```matchedGeometryEffect``` on the icon and the title on the expended and retracted view so SwiftUI knows how to transition between the 2 view states.
 
@@ -305,7 +365,6 @@ struct ListView: View {
 
     var body: some View {
     //...
-    else {
         if isHeaderExpended {
             extendedHeader
         } else {
@@ -317,3 +376,8 @@ struct ListView: View {
     }
 }
 ```
+
+## Conclusion
+
+Animations are a great way to bring life and smoothness to iOS apps.
+Using ``` @Namespace ``` property wrapper to link views together and create a smooth animation when transitioning between them. By applying the ``` matchedGeometryEffect ``` modifier, we ensured that the transitioning views maintained their position, color, and other properties, resulting in a seamless user experience. Additionally, we implemented a swipe-to-dismiss gesture using a custom ViewModifier to enhance the interaction and allow users to easily navigate back to the previous screen. Furthermore, we demonstrated the versatility of matchedGeometryEffect by incorporating an expandable header in the list view, showcasing another way to leverage this powerful feature. With these techniques, you can create visually appealing and interactive interfaces in your SwiftUI applications.
