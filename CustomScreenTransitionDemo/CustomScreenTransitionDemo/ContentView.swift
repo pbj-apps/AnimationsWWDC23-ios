@@ -9,9 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
-    
     var body: some View {
-            ListView()
+        ListView()
     }
 }
 
@@ -32,7 +31,7 @@ struct ListView: View {
     @State private var selectedItem: Item?
     @State private var isHeaderExpended: Bool = false
     
-    @State private var isListLayout = true
+    @State private var isGridLayout: Bool = false
     
     var body: some View {
         VStack {
@@ -40,33 +39,55 @@ struct ListView: View {
                 extendedHeader
             } else {
                 retractedHeader
-
             }
-            
-            if isListLayout {
-                ScrollView {
-                    ForEach(items, id: \.self) { item in
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                selectedItem = item
+
+            ScrollView {
+                if isGridLayout {
+                    gridLayout
+                } else {
+                        ForEach(items, id: \.self) { item in
+                            Button(action: {
+                                withAnimation(.easeInOut) {
+                                    selectedItem = item
+                                }
+                            }) {
+                                Text(item.title)
+                                    .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8)
+                                        .fill(item.color)
+                                        .matchedGeometryEffect(id: item.color, in: namespace)
+                                    )
+                                    .padding(.horizontal)
                             }
-                        }) {
-                            Text(item.title)
-                                .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity, minHeight: 180)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                    .fill(item.color)
-                                    .matchedGeometryEffect(id: item.color, in: namespace)
-                                )
-                                .padding(.horizontal)
                         }
                     }
-                }
             }
-        }.overlay {
+        }
+        .overlay {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            isGridLayout.toggle()
+                        }
+                    }, label: {
+                        Image(systemName: isGridLayout ? "rectangle.grid.1x2.fill" : "square.grid.2x2.fill")
+                                .resizable()
+                                .foregroundColor(.black)
+                                .frame(width: 30, height: 30)
+                    })
+                }
+                .padding(.top)
+                .padding(.trailing)
+                Spacer()
+            }
+        }
+        .overlay {
             if let selectedItem {
                 DetailView(item: selectedItem, namespace: namespace)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -78,6 +99,30 @@ struct ListView: View {
                     }
             }
         }
+    }
+    
+    private var gridLayout: some View {
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+            ForEach(items, id: \.self) { item in
+                Button(action: {
+                    withAnimation(.easeInOut) {
+                        selectedItem = item
+                    }
+                }) {
+                    Text(item.title)
+                        .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: 300, minHeight: 330)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                            .fill(item.color)
+                            .matchedGeometryEffect(id: item.color, in: namespace)
+                        )
+                }
+            }
+        }
+        .padding(.horizontal)
     }
     
     var retractedHeader: some View {
@@ -123,10 +168,9 @@ struct ListView: View {
                 .matchedGeometryEffect(id: "title", in: namespace)
                 .frame(height: 50)
             
-                Text("Bring new digital products to market and transform existing offerings with Studio. \n \nWe help startups and enterprise clients accelerate their product development plans with innovative strategy, beautiful design, world-class engineering, and product-led growth.")
-                    .font(.system(size: 16))
-                    .padding(.top)
-            
+            Text("Bring new digital products to market and transform existing offerings with Studio. \n \nWe help startups and enterprise clients accelerate their product development plans with innovative strategy, beautiful design, world-class engineering, and product-led growth.")
+                .font(.system(size: 16))
+                .padding(.top)
         }
         .onTapGesture {
             withAnimation(.easeIn) {
