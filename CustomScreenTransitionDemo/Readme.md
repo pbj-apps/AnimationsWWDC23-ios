@@ -301,7 +301,9 @@ DetailView(item: selectedItem, namespace: namespace)
         }
     }
 ```
-## Expendable Header
+## Layout transition
+
+### Expendable header
 
 To demonstrate another way to use ```matchedGeometryEffect```, let's add an expendable header to our list.
 
@@ -376,6 +378,75 @@ struct ListView: View {
     }
 }
 ```
+### Grid layout
+
+Similarly, we can add a button to switch from a vertical layout to a grid layout
+
+``` swift
+@State private var isGridLayout: Bool = false
+
+var body: some View {
+    VStack {
+        ScrollView {
+            if isGridLayout {
+                gridLayout
+            } else {
+                // Foreach
+            }
+        }
+    }
+    .overlay {
+        VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        isGridLayout.toggle()
+                    }
+                }, label: {
+                    Image(systemName: isGridLayout ? "rectangle.grid.1x2.fill" : "square.grid.2x2.fill")
+                            .resizable()
+                            .foregroundColor(.black)
+                            .frame(width: 30, height: 30)
+                })
+            }
+            .padding(.top)
+            .padding(.trailing)
+            Spacer()
+        }
+    }
+}
+
+private var gridLayout: some View {
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+            ForEach(items, id: \.self) { item in
+                Button(action: {
+                    withAnimation(.easeInOut) {
+                        selectedItem = item
+                    }
+                }) {
+                    Text(item.title)
+                        .matchedGeometryEffect(id: item.title, in: namespace, properties: .position)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: 300, minHeight: 330)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                            .fill(item.color)
+                            .matchedGeometryEffect(id: item.color, in: namespace)
+                        )
+                }
+            }
+        }
+        .padding(.horizontal)
+    }
+```
+The code is pretty straight forward. A simple boolean is used to change between the grid and the foreach layout. 
+The button is overlaying the content VStack to be always visible above the expendable header.
+
+The same Item, with the same ``` matchedGeometryEffect ```, is used except we change its dimensions to fit two items per row. 
+
+<img src="https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/fabb7f64-f316-4a85-8bf4-b3965bca7217" width="295" height="639" />
 
 ## Conclusion
 
