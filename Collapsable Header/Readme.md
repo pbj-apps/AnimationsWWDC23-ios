@@ -165,6 +165,7 @@ struct ParallaxScrolling<Content: View>: View {
                             .fill(.white)
                             .frame(width: 80, height: 80)
                             .padding(.leading, 70)
+
                         Circle()
                             .fill(.white)
                             .frame(width: 60, height: 60)
@@ -198,6 +199,7 @@ struct ParallaxGraphicExample: View {
                                 Text("Scroll Left")
                                     .font(.system(size: 50))
                                     .foregroundColor(.white)
+
                                 Spacer()
                             }
                             .padding(.leading, 10)
