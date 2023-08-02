@@ -1,4 +1,4 @@
-![Simulator Screen Recording - iPhone 14 Pro - 2023-08-02 at 15 47 56](https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/5691cdc7-c5b8-4be3-bb8d-1b78d1dfc5c2)# Parallax Effect
+# Parallax Effect
 
 ## What is it
 
