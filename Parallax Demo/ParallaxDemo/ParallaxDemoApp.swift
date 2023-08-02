@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct Collapsable_HeaderApp: App {
+struct ParallaxDemoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

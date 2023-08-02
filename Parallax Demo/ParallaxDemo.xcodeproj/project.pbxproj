@@ -7,24 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		962228C62A729DD90015DC97 /* Collapsable_HeaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962228C52A729DD90015DC97 /* Collapsable_HeaderApp.swift */; };
-		962228C82A729DD90015DC97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962228C72A729DD90015DC97 /* ContentView.swift */; };
-		962228CA2A729DDC0015DC97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962228C92A729DDC0015DC97 /* Assets.xcassets */; };
-		962228CD2A729DDC0015DC97 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962228CC2A729DDC0015DC97 /* Preview Assets.xcassets */; };
-		963C4E652A77EF6C008A2241 /* ParallaxGraphicExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963C4E642A77EF6C008A2241 /* ParallaxGraphicExample.swift */; };
-		963C4E672A78F493008A2241 /* StretchableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963C4E662A78F492008A2241 /* StretchableHeader.swift */; };
-		963C4E692A790597008A2241 /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963C4E682A790597008A2241 /* ParallaxView.swift */; };
+		961B12612A7A8F000080A419 /* ParallaxGraphicExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961B125A2A7A8F000080A419 /* ParallaxGraphicExample.swift */; };
+		961B12622A7A8F000080A419 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961B125B2A7A8F000080A419 /* Assets.xcassets */; };
+		961B12632A7A8F000080A419 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961B125D2A7A8F000080A419 /* Preview Assets.xcassets */; };
+		961B12642A7A8F000080A419 /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961B125E2A7A8F000080A419 /* ParallaxView.swift */; };
+		961B12652A7A8F000080A419 /* ParallaxDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961B125F2A7A8F000080A419 /* ParallaxDemoApp.swift */; };
+		961B12662A7A8F000080A419 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961B12602A7A8F000080A419 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		962228C22A729DD90015DC97 /* Collapsable Header.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collapsable Header.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		962228C52A729DD90015DC97 /* Collapsable_HeaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collapsable_HeaderApp.swift; sourceTree = "<group>"; };
-		962228C72A729DD90015DC97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		962228C92A729DDC0015DC97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		962228CC2A729DDC0015DC97 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		963C4E642A77EF6C008A2241 /* ParallaxGraphicExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxGraphicExample.swift; sourceTree = "<group>"; };
-		963C4E662A78F492008A2241 /* StretchableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchableHeader.swift; sourceTree = "<group>"; };
-		963C4E682A790597008A2241 /* ParallaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
+		961B125A2A7A8F000080A419 /* ParallaxGraphicExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxGraphicExample.swift; sourceTree = "<group>"; };
+		961B125B2A7A8F000080A419 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		961B125D2A7A8F000080A419 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		961B125E2A7A8F000080A419 /* ParallaxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
+		961B125F2A7A8F000080A419 /* ParallaxDemoApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxDemoApp.swift; sourceTree = "<group>"; };
+		961B12602A7A8F000080A419 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		962228C22A729DD90015DC97 /* ParallaxDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParallaxDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,10 +36,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		961B12592A7A8F000080A419 /* ParallaxDemo */ = {
+			isa = PBXGroup;
+			children = (
+				961B125A2A7A8F000080A419 /* ParallaxGraphicExample.swift */,
+				961B125B2A7A8F000080A419 /* Assets.xcassets */,
+				961B125C2A7A8F000080A419 /* Preview Content */,
+				961B125E2A7A8F000080A419 /* ParallaxView.swift */,
+				961B125F2A7A8F000080A419 /* ParallaxDemoApp.swift */,
+				961B12602A7A8F000080A419 /* ContentView.swift */,
+			);
+			path = ParallaxDemo;
+			sourceTree = "<group>";
+		};
+		961B125C2A7A8F000080A419 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				961B125D2A7A8F000080A419 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		962228B92A729DD90015DC97 = {
 			isa = PBXGroup;
 			children = (
-				962228C42A729DD90015DC97 /* Collapsable Header */,
+				961B12592A7A8F000080A419 /* ParallaxDemo */,
 				962228C32A729DD90015DC97 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,39 +68,17 @@
 		962228C32A729DD90015DC97 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				962228C22A729DD90015DC97 /* Collapsable Header.app */,
+				962228C22A729DD90015DC97 /* ParallaxDemo.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		962228C42A729DD90015DC97 /* Collapsable Header */ = {
-			isa = PBXGroup;
-			children = (
-				962228C52A729DD90015DC97 /* Collapsable_HeaderApp.swift */,
-				962228C72A729DD90015DC97 /* ContentView.swift */,
-				962228C92A729DDC0015DC97 /* Assets.xcassets */,
-				962228CB2A729DDC0015DC97 /* Preview Content */,
-				963C4E642A77EF6C008A2241 /* ParallaxGraphicExample.swift */,
-				963C4E662A78F492008A2241 /* StretchableHeader.swift */,
-				963C4E682A790597008A2241 /* ParallaxView.swift */,
-			);
-			path = "Collapsable Header";
-			sourceTree = "<group>";
-		};
-		962228CB2A729DDC0015DC97 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				962228CC2A729DDC0015DC97 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		962228C12A729DD90015DC97 /* Collapsable Header */ = {
+		962228C12A729DD90015DC97 /* ParallaxDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 962228D02A729DDC0015DC97 /* Build configuration list for PBXNativeTarget "Collapsable Header" */;
+			buildConfigurationList = 962228D02A729DDC0015DC97 /* Build configuration list for PBXNativeTarget "ParallaxDemo" */;
 			buildPhases = (
 				962228BE2A729DD90015DC97 /* Sources */,
 				962228BF2A729DD90015DC97 /* Frameworks */,
@@ -91,9 +88,9 @@
 			);
 			dependencies = (
 			);
-			name = "Collapsable Header";
+			name = ParallaxDemo;
 			productName = "Collapsable Header";
-			productReference = 962228C22A729DD90015DC97 /* Collapsable Header.app */;
+			productReference = 962228C22A729DD90015DC97 /* ParallaxDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 962228BD2A729DD90015DC97 /* Build configuration list for PBXProject "Collapsable Header" */;
+			buildConfigurationList = 962228BD2A729DD90015DC97 /* Build configuration list for PBXProject "ParallaxDemo" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				962228C12A729DD90015DC97 /* Collapsable Header */,
+				962228C12A729DD90015DC97 /* ParallaxDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -134,8 +131,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				962228CD2A729DDC0015DC97 /* Preview Assets.xcassets in Resources */,
-				962228CA2A729DDC0015DC97 /* Assets.xcassets in Resources */,
+				961B12632A7A8F000080A419 /* Preview Assets.xcassets in Resources */,
+				961B12622A7A8F000080A419 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,11 +143,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				963C4E672A78F493008A2241 /* StretchableHeader.swift in Sources */,
-				963C4E692A790597008A2241 /* ParallaxView.swift in Sources */,
-				963C4E652A77EF6C008A2241 /* ParallaxGraphicExample.swift in Sources */,
-				962228C82A729DD90015DC97 /* ContentView.swift in Sources */,
-				962228C62A729DD90015DC97 /* Collapsable_HeaderApp.swift in Sources */,
+				961B12612A7A8F000080A419 /* ParallaxGraphicExample.swift in Sources */,
+				961B12652A7A8F000080A419 /* ParallaxDemoApp.swift in Sources */,
+				961B12662A7A8F000080A419 /* ContentView.swift in Sources */,
+				961B12642A7A8F000080A419 /* ParallaxView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +274,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Collapsable Header/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ParallaxDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = F9564M5YZX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -292,7 +288,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.studio.Collapsable-Header";
+				PRODUCT_BUNDLE_IDENTIFIER = com.studio.ParallaxDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -307,7 +303,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Collapsable Header/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ParallaxDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = F9564M5YZX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -321,7 +317,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.studio.Collapsable-Header";
+				PRODUCT_BUNDLE_IDENTIFIER = com.studio.ParallaxDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -332,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		962228BD2A729DD90015DC97 /* Build configuration list for PBXProject "Collapsable Header" */ = {
+		962228BD2A729DD90015DC97 /* Build configuration list for PBXProject "ParallaxDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				962228CE2A729DDC0015DC97 /* Debug */,
@@ -341,7 +337,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		962228D02A729DDC0015DC97 /* Build configuration list for PBXNativeTarget "Collapsable Header" */ = {
+		962228D02A729DDC0015DC97 /* Build configuration list for PBXNativeTarget "ParallaxDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				962228D12A729DDC0015DC97 /* Debug */,
