@@ -73,7 +73,7 @@ struct ParallaxView: View {
 
 And here is the result 
 
-![Simulator Screen Recording - iPhone 14 - 2023-08-01 at 16 04 12](https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/fa57ee55-0199-47e2-b4ac-3347652fe592)
+![Simulator Screen Recording - iPhone 14 Pro - 2023-08-02 at 15 47 56](https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/decf90ca-6867-443a-ba01-5dff00422ea9)
 
 ### A step further
 
