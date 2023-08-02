@@ -114,7 +114,7 @@ struct ParallaxScrolling<Content: View>: View {
     }
 }
 ```
-Instead of one background, we add an extra one that will move even more slowly than the first one. 
+Instead of having only one background with trees, we introduce an additional layer that moves even more slowly, enhancing the parallax effect. The clouds, positioned further away from the trees, further accentuate the sense of depth. 
 
 ```swift
 struct ParallaxScrolling<Content: View>: View {
