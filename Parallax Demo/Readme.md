@@ -1,4 +1,4 @@
-# Parallax Effect
+![Simulator Screen Recording - iPhone 14 Pro - 2023-08-02 at 15 47 56](https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/5691cdc7-c5b8-4be3-bb8d-1b78d1dfc5c2)# Parallax Effect
 
 ## What is it
 
@@ -73,7 +73,8 @@ struct ParallaxView: View {
 
 And here is the result 
 
-![Simulator Screen Recording - iPhone 14 Pro - 2023-08-02 at 15 47 56](https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/decf90ca-6867-443a-ba01-5dff00422ea9)
+![Simulator Screen Recording - iPhone 14 Pro - 2023-08-02 at 15 47 56](https://github.com/pbj-apps/SwiftUIAnimationDemo-ios/assets/12393850/ef2a8da2-7caf-4928-bd07-9ed828b48527)
+
 
 ### A step further
 
